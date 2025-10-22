@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Red Sapien — Campaña Piloto Seguros USA (LINA & JUAN DAVID)</title>
+  <meta name="description" content="Red Sapien - Campaña Piloto de Seguros Primarios y Suplementarios (USA). Tecnología: VoIP, Zadarma/Issabel/Odoo, WhatsApp, Email, CRM, Automatización, OpenSource y sistemas Inbox."/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* =========================
+       RESET & THEME COLORS
+       ========================= */
+    :root{
+      --bg-1: #071023;
+      --bg-2: #081426;
+      --card: rgba(255,255,255,0.03);
+      --glass: rgba(255,255,255,0.04);
+      --muted: #9fb0c9;
+      --accent: #00c2a8;
+      --accent-2: #6b8cff;
+      --accent-3: #ffd66b;
+      --white: #e9f3ff;
+      --success: #2bd995;
+      --danger: #ff6b6b;
+      --max-width: 1200px;
+      --radius: 14px;
+      --shadow: 0 16px 40px rgba(2,10,25,0.6);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+      color:var(--white);
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(107,140,255,0.05), transparent 6%),
+                  radial-gradient(900px 450px at 90% 90%, rgba(0,194,168,0.04), transparent 8%),
+                  linear-gradient(180deg,var(--bg-1),var(--bg-2));
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+    }
+
+    /* =========================
+       PAGE LAYOUT
+       ========================= */
+    .container{
+      max-width:var(--max-width);
+      margin:32px auto;
+      padding:28px;
+    }
+    header{
+      display:flex;
+      gap:24px;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:28px;
+    }
+    .brand{
+      display:flex;gap:14px;align-items:center;
+    }
+    .logo{
+      width:64px;height:64px;border-radius:12px;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      display:flex;align-items:center;justify-content:center;font-weight:800;color:#021027;font-size:22px;
+      box-shadow: var(--shadow);
+    }
+    .brand h1{margin:0;font-size:20px}
+    .brand p{margin:0;color:var(--muted);font-size:13px}
+
+    nav{display:flex;gap:12px;align-items:center}
+    nav a{color:var(--muted);text-decoration:none;font-size:14px;padding:8px 12px;border-radius:10px}
+    nav a:hover{background:rgba(255,255,255,0.02);color:var(--white)}
+
+    /* =========================
+       HERO
+       ========================= */
+    .hero{
+      display:grid;
+      grid-template-columns: 1fr 440px;
+      gap:28px;
+      align-items:stretch;
+    }
+    .hero-card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:var(--radius);
+      padding:26px;
+      border:1px solid var(--card);
+      box-shadow: var(--shadow);
+    }
+    .hero-title{font-size:26px;margin:0 0 8px 0}
+    .hero-sub{color:var(--muted);margin:0 0 18px 0}
+    .badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+    .badge{background:rgba(255,255,255,0.03);padding:6px 10px;border-radius:999px;font-weight:700;color:var(--muted);font-size:13px;border:1px solid rgba(255,255,255,0.02)}
+    .badge.pulse{color:var(--accent);border-color:rgba(0,194,168,0.12)}
+
+    .hero-cta{display:flex;gap:12px;align-items:center}
+    .input{padding:12px 14px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--white);outline:none;min-width:220px}
+    .btn-primary{padding:12px 16px;border-radius:10px;border:none;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#021027;font-weight:800;cursor:pointer;box-shadow:0 12px 30px rgba(0,194,168,0.08)}
+    .note{color:var(--muted);font-size:13px;margin-top:12px}
+
+    /* small stats */
+    .stats{display:flex;gap:12px;margin-top:14px;flex-wrap:wrap}
+    .stat{background:var(--glass);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);min-width:140px}
+    .stat h4{margin:0;color:var(--muted);font-size:13px}
+    .stat p{margin:6px 0 0;font-weight:700;font-size:18px}
+
+    /* HERO side (dashboard mock) */
+    .side-card{
+      border-radius:12px;padding:16px;border:1px solid rgba(255,255,255,0.03);background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      box-shadow: 0 12px 30px rgba(2,10,20,0.45);min-height:320px;position:relative;overflow:hidden;
+    }
+    .glow{
+      position:absolute;right:-60px;top:-60px;width:260px;height:260px;border-radius:140px;background:linear-gradient(135deg, rgba(107,140,255,0.12), rgba(0,194,168,0.12));filter:blur(28px);opacity:0.95;
+    }
+    .dashboard-head{display:flex;justify-content:space-between;align-items:center}
+    .dashboard-head h3{margin:0;font-size:16px}
+    .mini-kpis{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+    .mini-kpi{background:rgba(255,255,255,0.02);padding:8px;border-radius:10px;border:1px solid rgba(255,255,255,0.02);min-width:120px}
+    .call-queue{margin-top:16px;background:rgba(255,255,255,0.01);padding:10px;border-radius:10px;max-height:130px;overflow:auto}
+
+    /* =========================
+       SECTIONS (Problem, Solución, Flujo)
+       ========================= */
+    section.present{
+      margin-top:28px;display:grid;gap:18px;
+    }
+    .row{
+      display:grid;grid-template-columns: 1fr 1fr;gap:18px;
+    }
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.015), transparent);padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+    .card h3{margin:0 0 8px 0}
+    .card p{margin:0;color:var(--muted)}
+
+    /* feature grid */
+    .features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:10px}
+    .feature{padding:16px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.02);transition:transform .25s}
+    .feature:hover{transform:translateY(-8px)}
+
+    /* Workflow visual */
+    .workflow{
+      display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:center;padding:16px;
+    }
+    .wf-step{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);min-width:140px;text-align:center;box-shadow:0 8px 20px rgba(2,10,30,0.35)}
+    .arrow{font-size:20px;color:var(--muted)}
+
+    /* Tech stack list */
+    .stack-list{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .stack-item{padding:8px 10px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.02);color:var(--muted);font-weight:600}
+
+    /* KPI / Pilot box */
+    .pilot{
+      display:flex;gap:18px;align-items:center;justify-content:space-between;padding:16px;border-radius:12px;background:linear-gradient(90deg, rgba(0,194,168,0.02), rgba(107,140,255,0.02));border:1px solid rgba(255,255,255,0.03)
+    }
+    .pilot .left{max-width:70%}
+    .pilot h3{margin:0}
+    .pilot p{margin:6px 0 0;color:var(--muted)}
+
+    /* OPEN SOURCE & INBOX benefits */
+    .benefits{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .benefit{padding:14px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.02)}
+
+    /* CONTACT / CTA */
+    .cta-full{margin-top:18px;padding:20px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);display:flex;gap:18px;align-items:center;justify-content:space-between}
+    .contact-form{display:flex;gap:8px;align-items:center}
+    .small{font-size:13px;color:var(--muted)}
+
+    footer{margin-top:28px;text-align:center;color:var(--muted);font-size:13px;padding-bottom:30px}
+
+    /* responsive */
+    @media (max-width:1000px){
+      .hero{grid-template-columns:1fr; }
+      .row{grid-template-columns:1fr}
+      .features-grid{grid-template-columns:repeat(1,1fr)}
+      .benefits{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- HEADER -->
+    <header>
+      <div class="brand">
+        <div class="logo" aria-hidden>RS</div>
+        <div>
+          <h1>Red Sapien</h1>
+          <p>Sapien de intelectual · Agencia — Soluciones Omnicanal y Pilotos de Afiliación</p>
+        </div>
+      </div>
+
+      <nav>
+        <a href="#problema">Problema</a>
+        <a href="#solucion">Solución</a>
+        <a href="#flujo">Flujo</a>
+        <a href="#tech">Tech Stack</a>
+        <a href="#open">OpenSource</a>
+      </nav>
+    </header>
+
+    <!-- HERO -->
+    <main class="hero">
+      <div class="hero-card" role="region" aria-labelledby="heroTitle">
+        <div class="badges">
+          <div class="badge pulse">Piloto · Q4</div>
+          <div class="badge">Seguros Primarios & Suplementarios (USA)</div>
+          <div class="badge">Omnicanal · Automáticamente</div>
+        </div>
+
+        <h2 class="hero-title" id="heroTitle">Campaña Piloto: Afiliación de Pacientes — <span style="color:var(--accent)">LINA & JUAN DAVID</span></h2>
+        <p class="hero-sub">Red Sapien diseña e implementa un piloto de 15 días con integración VoIP (Zadarma/Issabel/Odoo), WhatsApp Business API, Email Automation y CRM. Objetivo: probar conversión, optimizar workflows y demostrar ROI.</p>
+
+        <div class="hero-cta">
+          <input class="input" id="heroLead" placeholder="Nombre, teléfono o email" aria-label="capture lead"/>
+          <button class="btn-primary" onclick="quickLead()">Solicitar Demo</button>
+        </div>
+
+        <div class="stats" role="list" aria-label="KPIs">
+          <div class="stat" role="listitem"><h4>Coste por minuto</h4><p>&lt; $0.01</p></div>
+          <div class="stat" role="listitem"><h4>Tasa conversión meta</h4><p>+25%</p></div>
+          <div class="stat" role="listitem"><h4>WhatsApp Open</h4><p>&gt;80%</p></div>
+        </div>
+
+        <div class="note">Nota: Las cifras son estimadas y dependen de red, calidad de leads y reglas de scoring.</div>
+      </div>
+
+      <aside class="side-card" aria-hidden="true">
+        <div class="glow"></div>
+        <div class="dashboard-head">
+          <h3>Dashboard — Vista rápida</h3>
+          <div style="color:var(--muted);font-weight:700">Piloto / 15 días</div>
+        </div>
+
+        <div class="mini-kpis">
+          <div class="mini-kpi"><strong>1,248</strong><div class="small">Leads</div></div>
+          <div class="mini-kpi"><strong>312</strong><div class="small">Afiliaciones</div></div>
+          <div class="mini-kpi"><strong>72</strong><div class="small">Leads calientes</div></div>
+        </div>
+
+        <div class="call-queue" style="margin-top:12px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+            <div style="font-weight:700">Colas activas</div><div style="color:var(--muted)">Ocupación 68%</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div style="display:flex;justify-content:space-between"><div>Linea +1 555 • Juan</div><div style="color:var(--muted)">En llamada</div></div>
+            <div style="display:flex;justify-content:space-between"><div>WhatsApp • Push</div><div style="color:var(--muted)">10 nuevos</div></div>
+            <div style="display:flex;justify-content:space-between"><div>Email Automation</div><div style="color:var(--muted)">22% CTR</div></div>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <!-- PRESENTATION SECTIONS -->
+    <section id="problema" class="present">
+      <div class="row">
+        <div class="card">
+          <h3>Problema</h3>
+          <p>Las campañas tradicionales de afiliación sufren de: dispersión de canales, pérdida de contexto, alta tasa de leads fríos y costos crecientes de telefonía. Los pacientes abandonan por repetición de información y largos tiempos de respuesta.</p>
+        </div>
+        <div class="card">
+          <h3>Impacto</h3>
+          <p>Mayor coste por afiliado, menor retención a 30/60/90 días, y dificultad para escalar por estado en EE.UU. cuando la infraestructura es on-premise o fragmentada por herramientas.</p>
+        </div>
+      </div>
+
+      <div style="margin-top:12px" class="features-grid">
+        <div class="feature"><strong>Falta de trazabilidad</strong><div class="small">Datos dispersos entre call center, chat y emails.</div></div>
+        <div class="feature"><strong>Tiempo de respuesta</strong><div class="small">AHT alto por switching entre apps.</div></div>
+        <div class="feature"><strong>Costos telefónicos</strong><div class="small">PBX tradicionales y rutas internacionales costosas.</div></div>
+      </div>
+    </section>
+
+    <section id="solucion" class="present" style="margin-top:22px;">
+      <div class="row">
+        <div class="card">
+          <h3>Solución Red Sapien</h3>
+          <p>Implementar un ecosistema omnicanal centralizado (Inbox) + VoIP Cloud (Zadarma / Issabel / Odoo) + Automatización (workflows y scoring) + Email & WhatsApp. Crear un piloto de 15 días para validar KPIs.</p>
+        </div>
+        <div class="card">
+          <h3>Resultados Esperados</h3>
+          <p>Reducción de costos telefónicos, aumento en tasa de conversión, mejoras en experiencia del paciente y procesos reproducibles para escalar por estado.</p>
+        </div>
+      </div>
+
+      <div style="margin-top:12px" class="features-grid">
+        <div class="feature"><strong>Inbox Omnicanal</strong><div class="small">Un único hilo por cliente con redes sociales, WhatsApp, llamadas y correo.</div></div>
+        <div class="feature"><strong>Automatización</strong><div class="small">Triggers, asignaciones, re-engagement y cierre automático del ciclo.</div></div>
+        <div class="feature"><strong>Enriquecimiento</strong><div class="small">Web scraping ético para enriquecer y filtrar base de leads.</div></div>
+      </div>
+    </section>
+
+    <section id="flujo" class="present" style="margin-top:22px;">
+      <div class="card">
+        <h3>Flujo Operativo (Resumen)</h3>
+        <p>Desde la adquisición hasta la afiliación y seguimiento post-venta — todo orquestado por workflows automáticos que maximizan velocidad y conversión.</p>
+
+        <div class="workflow" style="margin-top:12px" aria-hidden="true">
+          <div class="wf-step">Adquisición <div class="small">Web + Scraping + Ads</div></div>
+          <div class="arrow">→</div>
+          <div class="wf-step">Lead Capture <div class="small">Form / WhatsApp / CTA</div></div>
+          <div class="arrow">→</div>
+          <div class="wf-step">Scoring & Enriq. <div class="small">Filtrado + Data Enrichment</div></div>
+          <div class="arrow">→</div>
+          <div class="wf-step">Nurture Automático <div class="small">Email & WhatsApp Flow</div></div>
+          <div class="arrow">→</div>
+          <div class="wf-step">Contact Center <div class="small">VoIP + CRM (Pop-up)</div></div>
+          <div class="arrow">→</div>
+          <div class="wf-step">Afiliación <div class="small">E-signature + DB</div></div>
+          <div class="arrow">→</div>
+          <div class="wf-step">Post-venta <div class="small">Renewals & Upsell</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tech Stack -->
+    <section id="tech" class="present" style="margin-top:22px;">
+      <div class="row">
+        <div class="card">
+          <h3>Tech Stack Recomendado</h3>
+          <p>Combinación equilibrada entre soluciones SaaS y OpenSource para control, ahorro y escalabilidad.</p>
+
+          <div class="stack-list" style="margin-top:12px">
+            <div class="stack-item">VoIP: Zadarma / Issabel / Odoo VoIP</div>
+            <div class="stack-item">Inbox Omnicanal (Front-style / Umnico)</div>
+            <div class="stack-item">WhatsApp Business API</div>
+            <div class="stack-item">Email Automation (SMTP/ESP)</div>
+            <div class="stack-item">CRM Integrado</div>
+            <div class="stack-item">Zapier / Integrator</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Integraciones clave</h3>
+          <p>Click-to-call, webhooks para transferir leads, logging automático, grabación de llamadas, dashboards y speech analytics para optimización.</p>
+
+          <div style="margin-top:12px">
+            <div class="small">Ejemplos:</div>
+            <ul style="margin:8px 0 0 18px;color:var(--muted)">
+              <li>Lead → Zapier → CRM → Scoring → Inbox</li>
+              <li>VoIP call → Pop-up en CRM → Registro automático</li>
+              <li>WhatsApp opt-in → Bot de precalificación → Transfer to agent</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pilot & KPIs -->
+    <section style="margin-top:22px">
+      <div class="pilot">
+        <div class="left">
+          <h3>Piloto recomendado — 15 días</h3>
+          <p class="small">10 agentes · 2 números locales (EE.UU.) · 2 canales activos (WhatsApp + Email) · Integración VoIP + CRM · Objetivo: validar conversiones y coste por afiliado.</p>
+        </div>
+
+        <div style="min-width:260px;text-align:right">
+          <div style="font-weight:800;font-size:18px">Métricas Objetivo</div>
+          <div class="small" style="margin-top:6px">Coste por afiliado &lt; $50 · Conversión +25% · AHT -30%</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Open Source & Inbox Benefits -->
+    <section id="open" style="margin-top:22px">
+      <h3>Beneficios de Open-Source y Centralización Inbox</h3>
+      <div class="benefits" style="margin-top:12px">
+        <div class="benefit">
+          <h4>Open-Source — Ahorro y control</h4>
+          <p class="small">Soluciones como Issabel (Asterisk), Odoo (componente VoIP/CRM) o otros proyectos permiten reducir licencias SaaS, personalizar flujos y mantener datos en infra propia o nube privada. Beneficios concretos:</p>
+          <ul style="color:var(--muted);margin-top:8px">
+            <li>Menor coste de licenciamiento a mediano plazo.</li>
+            <li>Alta personalización de IVR, enrutamientos y reportes.</li>
+            <li>Control de privacidad y cumplimiento (datos en tu dominio).</li>
+            <li>Comunidad y extensibilidad — integraciones a medida.</li>
+          </ul>
+        </div>
+
+        <div class="benefit">
+          <h4>Sistemas Inbox — Centralización que convierte</h4>
+          <p class="small">Los inbox centralizados consolidan redes sociales, WhatsApp, chat y emails en un solo hilo por cliente. ¿Qué ganamos?</p>
+          <ul style="color:var(--muted);margin-top:8px">
+            <li>Contexto completo → menos tiempo por interacción.</li>
+            <li>Asignación y re-asignación automática basada en reglas de negocio.</li>
+            <li>Workflows eficientes: notas internas, colaboraciones, SLAs visibles.</li>
+            <li>Mejor experiencia cliente → mayor NPS y menor churn.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA / Contact -->
+    <section style="margin-top:22px">
+      <div class="cta-full">
+        <div>
+          <h3>Inicia el Piloto con Red Sapien</h3>
+          <div class="small">Solicita la puesta en marcha del piloto y recibe una propuesta técnica y financiera personalizada.</div>
+        </div>
+
+        <div style="display:flex;gap:10px;align-items:center">
+          <div class="contact-form">
+            <input class="input" id="leadName" placeholder="Nombre completo" />
+            <input class="input" id="leadPhone" placeholder="Teléfono / WhatsApp" />
+            <select id="leadType" class="input" style="min-width:160px;padding:12px">
+              <option value="">Selecciona piloto</option>
+              <option value="15dias">Piloto 15 días — 10 agentes</option>
+              <option value="30dias">Piloto 30 días — Escala</option>
+            </select>
+            <button class="btn-primary" onclick="submitPilot()">Enviar Solicitud</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="respond" style="margin-top:10px;color:var(--muted)"></div>
+    </section>
+
+    <footer>
+      © Red Sapien · Campaña Piloto LINA & JUAN DAVID · Diseño y Operación · Todos los derechos reservados.
+    </footer>
+  </div>
+
+  <script>
+    /* =========================
+       Small interactive behaviors
+       ========================= */
+
+    // Quick hero CTA
+    function quickLead(){
+      const v = document.getElementById('heroLead').value.trim();
+      if(!v){ alert('Ingresa nombre o teléfono para solicitar demo.'); return; }
+      // Simulate lead creation + scoring
+      const score = Math.floor(55 + Math.random()*45); // 55-99
+      alert('Solicitud recibida: ' + v + '\\nScore estimado: ' + score + '\\nRed Sapien te contactará en breve.');
+      document.getElementById('heroLead').value = '';
+    }
+
+    // Submit pilot form simulation (no backend) with routing logic
+    function submitPilot(){
+      const name = document.getElementById('leadName').value.trim();
+      const phone = document.getElementById('leadPhone').value.trim();
+      const plan = document.getElementById('leadType').value;
+      const resp = document.getElementById('respond');
+
+      if(!name || !phone || !plan){
+        resp.style.color = 'var(--danger)';
+        resp.textContent = 'Completa los campos: nombre, teléfono y tipo de piloto.';
+        return;
+      }
+
+      resp.style.color = 'var(--muted)';
+      resp.textContent = 'Procesando solicitud...';
+
+      setTimeout(()=> {
+        // Simulate scoring and assignment
+        const score = Math.floor(60 + Math.random()*40);
+        const agent = score >= 75 ? 'Lina' : 'Juan David';
+        const estCostPerAf = (Math.random()*40 + 20).toFixed(2); // $20 - $60
+        resp.style.color = 'var(--success)';
+        resp.innerHTML = `<strong>Solicitud registrada ✅</strong><br>
+                          Nombre: <strong>${escapeHtml(name)}</strong><br>
+                          Tel: <strong>${escapeHtml(phone)}</strong><br>
+                          Piloto: <strong>${plan}</strong><br>
+                          Lead Score: <strong style="color:var(--accent)">${score}</strong><br>
+                          Asignado a: <strong>${agent}</strong><br>
+                          Est. coste por afiliado (proyección): <strong>$${estCostPerAf}</strong>`;
+        // Reset small delay
+        setTimeout(()=>{ document.getElementById('leadName').value=''; document.getElementById('leadPhone').value=''; document.getElementById('leadType').value=''; }, 1400);
+      }, 900);
+    }
+
+    // small helper for escaping
+    function escapeHtml(text) {
+      return text.replace(/[&<>"'`=\/]/g, function(s) {
+        return ({
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#39;',
+          '/': '&#x2F;',
+          '`': '&#x60;',
+          '=': '&#x3D;'
+        })[s];
+      });
+    }
+
+    // Smooth nav scroll
+    document.querySelectorAll('nav a').forEach(a => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        const id = a.getAttribute('href').slice(1);
+        const el = document.getElementById(id);
+        if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+      });
+    });
+
+    // Simple accessibility: keyboard focus style for interactive cards
+    document.querySelectorAll('.wf-step, .feature, .stack-item, .mini-kpi').forEach(el=>{
+      el.setAttribute('tabindex','0');
+    });
+  </script>
+</body>
+</html>
